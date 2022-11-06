@@ -1,6 +1,8 @@
 import random
 
 N, M = (5, 10) # размер игрового поля NxN и число мин M
+P = [-2]*N*N
+PM = [0]*N*N
 
 def startGame():
     """Функция запуска игры: отображается игровое поле,
@@ -8,9 +10,6 @@ def startGame():
         результат проверяется на наличие мины или
         выигрышной ситуации
     """
-    P = [-2]*N*N
-    PM = [0]*N*N
-
     createGame(PM)
     finishState = isFinish(PM, P)
     while finishState > 0:
@@ -97,14 +96,26 @@ def isFinish(PM, P):
         выиграли, проиграли, игра продолжается
     """
     for i in range(N * N):
-        if P[i] != -2 and PM[i] < 0: return -1
-        if P[i] == -2 and PM[i] >= 0: return 1
+        if P[i] != -2 and PM[i] < 0:
+            print('PM[i]',PM[i])
+            print('P[i]', P[i])
+            print(-1)
+            return -1
+    for i in range(N * N):
+        if P[i] == -2 and PM[i] >= 0:
+            print('PM[i]', PM[i])
+            print('P[i]', P[i])
+            print(1)
+            return 1
 
+    print(-2)
     return -2
 
 
 res = startGame()
 if res == -1:
-    print("Вы проиграли")
+    print("Вы проиграли, вот что было на самом деле на минном поле")
+    show(PM)
 else:
-    print("Вы выиграли")
+    print("Вы выиграли, вот что было на самом деле на минном поле")
+    show(PM)
